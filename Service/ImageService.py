@@ -11,6 +11,7 @@ def deleteByNo(no) :
 	obj = findOneByNo(no)
 	if obj == None :
 		return 'already not exists'
+	deleteImageFile(str(obj.no) + '.jpg')
 	db_session.delete(obj)
 	db_session.commit()
 	return "deleted"
@@ -29,6 +30,9 @@ def generateNo() :
 	while findOneByNo(no) != None :
 		no = random.randint(1,100000)
 	return no
+
+def deleteImageFile(filename) :
+	subprocess.check_output('rm ' + IMAGE_FOLDER_AFTER + filename);
 
 def insertImage(filename, imgno, owner, title, caption) :
 	image = Image(imgno, owner, title, caption, IMAGE_FOLDER_AFTER+str(imgno)+'.jpg')
