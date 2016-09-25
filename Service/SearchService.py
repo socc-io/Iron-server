@@ -1,7 +1,7 @@
 from Model.database import db_session
-from Model.database import Image
-from Model.database import Video
-from Model.database import Word
+from Model.ImageModel import Image
+from Model.VideoModel import Video
+from Model.WordModel import Word
 from secret import *
 
 import Service.ImageService as ImageService

@@ -1,6 +1,5 @@
 from __future__ import with_statement
 from flask import Flask, request, abort
-from flask_sqlalchemy import SQLAlchemy
 from Controller import registerController
 from Model.database import init_db, db_session
 from secret import *
