@@ -16,6 +16,9 @@ def findAll() :
 def findOneByNo(no) :
 	return db_session.query(Word).filter(Word.no == no).first()
 
+def findByContentLike(content) :
+	return db_session.query(Word).filter(Word.content.like('%'+content+'%')).all()
+
 def generateNo() :
 	no = random.randint(1,100000)
 	while findOneByNo(no) != None :
