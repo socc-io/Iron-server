@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <title>....</title>
+    <style></style>
+    <script>
+      $(document).ready(function(){
+        var background_width = $(window).width();
+        var background_height = $(window).height();
+
+        $(".background_layer_div").css("width",background_width+"px");
+        $(".background_layer_div").css("height",background_height+"px");
+      });
+    </script>
+  </head>
+
+  <body>
+
+    <div class="background_layer_div">
+      <div class="main_logo"><img src="img/logo7.png" style="width:500px;"></div>
+      <!--div class="serach_input_div"><input class="search_input" type="text" style=""></div-->
+
+
+    <!--materilize css input-->
+    <div class="container">
+      <form method="post" action="./searchPage.html">
+        <div class="group">
+          <input type="text" required style="background-color: rgba(0, 0, 0, 0); color:#e5e5e5;">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Search</label>
+        </div>
+      </form>
+
+    </div>
+
+    <!--end-->
+</div>
+  </body>
+</html>
