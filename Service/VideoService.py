@@ -38,19 +38,26 @@ def generateNo() :
 def deleteVideofile(filename) :
 	subprocess.check_output('rm ' + VIDEO_FOLDER + filename, shell=True)
 
-def insertVideo(vidno, outerpath) :
-	video = Video(vidno, outerpath)
+def insertVideo(vidno, outerpath, thumbnail, title) :
+	video = Video(vidno, title, outerpath, thumbnail) # empty is title
 	db_session.add(video)
 	db_session.commit()
+
+def selectThumbnail(filename, no) :
+	thumbnail = IMAGE_FOLDER_AFTER + 'vid_'+str(no)+'.jpg'
+	cmd = 'cp %s %s' % (IMAGE_FOLDER_BEFORE + filename + '_1.jpg', thumbnail)
+	subprocess.check_output(cmd, shell=True)
+	return thumbnail
 
 def vidToImg(vidPath, outputPath) :
 	command = 'ffmpeg -i %s -an -r %f -y -s %s %s' % (vidPath, imgRate, imgResolution, outputPath);
 	result = subprocess.check_output(command, shell=True)
 
-def signVideo(filename, outerpath) :
-	vidToImg(VIDEO_FOLDER + filename, IMAGE_FOLDER_BEFORE + filename + '_%d.jpg')
+def signVideo(filename, outerpath, title) :
 	vidno = generateNo()
-	insertVideo(vidno, outerpath)
+	vidToImg(VIDEO_FOLDER + filename, IMAGE_FOLDER_BEFORE + filename + '_%d.jpg')
+	thumbnail = selectThumbnail(filename, vidno)
+	insertVideo(vidno, outerpath, thumbnail, title)
 	deleteVideofile(filename)
 	for imgpath in misc.scanFolder(IMAGE_FOLDER_BEFORE) :
 		imgname = imgpath.split('/')[-1]

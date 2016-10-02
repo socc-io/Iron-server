@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="static/css/searchPage.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <title>Video Search Engine</title>
+    <style></style>
+    <script>
+      $(document).ready(function(){
+        var background_width = $(window).width();
+        var background_height = $(window).height();
+
+        $(".background_layer_div").css("width",background_width+"px");
+        $(".background_layer_div").css("height",background_height+"px");
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+      <p style="font-size:28px; font-weight:600;">검색결과 {% if txt %} of {{ txt }} {% endif %}</p>
+      <div class="grayLine"></div>
+
+      <div class="thumbnails">
+        <ul>
+          {% if noresult %}
+          <p>No search result</p>
+          {% endif %}
+          {% for img in imgs %}
+            <li class="search_list">
+              <div class="thumbnail_img" style="background-image: url('{{img.localpath}}')"></div>
+
+              <ul class="text">
+                <li class="title">{{img.title}} (IMAGE)</li>
+                <li class="postdate">{{img.postdate}}</li>
+                <li class="caption">{{img.caption}}</li>
+              </ul>
+            </li>
+          {% endfor %}
+          {% for vid in vids %}
+            <li class="search_list">
+              <div class="thumbnail_img" style="background-image: url('{{vid.thumbnail}}')"></div>
+
+              <ul class="text">
+                <li class="title">{{vid.title}} (VIDEO)</li>
+                <li class="postdate">{{vid.postdate}}</li>
+                <li class="outerpath"><a href='{{vid.outerpath}}'>{{vid.outerpath}}</a></li>
+              </ul>
+            </li>
+          {% endfor %}
+            <li class="search_list">
+              <div class="thumbnail_img"></div>
+
+              <ul class="text">
+                <li class="title">[빅뱅이론] 시즌1 17화(마지막화) - 쉘든의 자리 찾기</li>
+                <li class="writer">Youngjin Kim</li>
+                <li class="description">빅뱅이론 시즌1 대망의 마지막화! 쉘든은 오랜 방황을 마치고 자리를 찾아가기 시작하는데...</li>
+              </ul>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
