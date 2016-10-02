@@ -29,5 +29,6 @@ def search(sentence) :
 					vid = img.video
 					video_no[vidno] = 1
 					videos.append(vid)
+					del images[-1]
 	return {'images' : images, 'videos' : videos}
 

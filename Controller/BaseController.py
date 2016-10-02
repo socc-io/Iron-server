@@ -1,5 +1,5 @@
 from Model.database import db_session
-from flask import Blueprint, request, session, request, abort
+from flask import Blueprint, request, session, request, abort, render_template
 from Service.MiscService import generateCsrf
 from secret import *
 
@@ -12,7 +12,18 @@ baseCont = Blueprint('baseCont', __name__, template_folder='../templates')
 ####################################################
 @baseCont.route('/', methods=['GET'])
 def Home() :
-	return "Hello this is home! " + request.url
+	return render_template('index.html')
+
+@baseCont.route('/search', methods=['GET'])
+def SearchPage() :
+	txt = request.args.get('txt', 0)
+	if txt == 0 :
+		txt = ''
+	search_result = searchService.search(txt)
+	imgs = search_result['images']
+	vids = search_result['videos']
+	noresult = (len(imgs) == 0) and (len(vids) == 0)
+	return render_template('searchPage.html', txt=txt, imgs=imgs, vids=vids, noresult=noresult)
 
 ####################################################
 # get CSRF Token

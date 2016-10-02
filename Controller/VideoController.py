@@ -29,7 +29,7 @@ def GetVid(vidno) :
 ####################################################
 @videoCont.route('/vid/<int:vidno>', methods=['DELETE'])
 def DeleteVid(vidno) :
-	pass
+	return str(videoService.deleteByNo(vidno))
 
 ####################################################
 # Video POST
@@ -39,6 +39,10 @@ def PostVid() :
 	if 'file' not in request.files :
 		flash('No file part')
 		return 'no file found'
+	title = request.form.get('title', 0)
+	if title == 0 :
+		flash('No title found')
+		return 'no title found'
 	outerpath = request.form.get('outerpath', 0)
 	if outerpath == 0 :
 		return 'no outerpath'
@@ -50,5 +54,5 @@ def PostVid() :
 		return 'invalid video file name'	
 	filename = secure_filename(file.filename)
 	file.save(os.path.join(VIDEO_FOLDER, filename))
-	videoService.signVideo(filename, outerpath)
+	videoService.signVideo(filename, outerpath, title)
 	return 'success'

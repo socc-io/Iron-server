@@ -8,7 +8,7 @@ CSRF_LENGTH = 10
 IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'png')
 VIDEO_EXTENSIONS = ('mp4', 'avi')
 
-FILE_PATH_PREFIX = 'files/'
+FILE_PATH_PREFIX = 'static/files/'
 IMAGE_FOLDER_BEFORE = FILE_PATH_PREFIX + 'images_before/'
 IMAGE_FOLDER_AFTER = FILE_PATH_PREFIX + 'images_after/'
 VIDEO_FOLDER = FILE_PATH_PREFIX + 'videos/'
