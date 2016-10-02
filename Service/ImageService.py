@@ -11,7 +11,7 @@ def deleteByNo(no) :
 	obj = findOneByNo(no)
 	if obj == None :
 		return 'already not exists'
-	deleteImageFile(str(obj.no) + '.jpg')
+	deleteImageFile(str(obj.no) + '.jpg')3
 	db_session.delete(obj)
 	db_session.commit()
 	return "deleted"
@@ -37,7 +37,7 @@ def deleteImageFile(filename) :
 def insertImage(filename, imgno, owner, title, caption) :
 	image = Image(imgno, owner, title, caption, IMAGE_FOLDER_AFTER+str(imgno)+'.jpg')
 	db_session.add(image)
-	db_session.commit()
+	db_session.commit()	
 	return imgno
 
 def signImage(filename, owner=None) :
