@@ -37,7 +37,11 @@ nltk.download()
 
 secret.py 에 있는 기타 정보들을 작성해주세요.
 
+caption_gpu.sh 에 있는 neuraltalk2 경로를 설정해주세요. (CPU 사용버전은 caption.sh를 수정해서 사용하세요.)
+
 Write proper informations in secret.py
+
+Set path of neuraltalk2 in caption_gpu.sh (use caption.sh if you only use cpu)
 
 ## 설명
 
