@@ -1,8 +1,12 @@
 from Model.database import Base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 
+imageWordAssociationTable = Table('image_word_association', Base.metadata,\
+	Column('imgno', Integer, ForeignKey('image.no')),\
+	Column('wordno', Integer, ForeignKey('word.no'))\
+)
 
 class Image(Base) :
 	__tablename__ = 'image'
@@ -14,6 +18,7 @@ class Image(Base) :
 	postdate = Column(DateTime)
 
 	video = relationship('Video', backref=backref('images'))
+	words = relationship('Word', secondary=imageWordAssociationTable, back_populates='images')
 	def __init__(self, no, owner, title, caption, localpath) :
 		self.no = no
 		self.owner = owner

@@ -1,2 +1,6 @@
+from SentenceSpliter.sentence_analysis import Analyzer
+
 def splitCaption(str) :
-	return str.split(' ')
+	analyzer = Analyzer(str)
+	words = analyzer.findCriticalWords()
+	return words

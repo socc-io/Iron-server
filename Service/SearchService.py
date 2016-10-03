@@ -20,15 +20,15 @@ def search(sentence) :
 	for word in from_words :
 		db_words = wordService.findByContentLike(word)
 		for db_word in db_words :
-			img = db_word.image
-			if image_no.get(img.no, -1) == -1 :
-				image_no[img.no] = 1;
-				images.append(img)
-				vidno = img.owner
-				if vidno != None and video_no.get(vidno, -1) == -1 :
-					vid = img.video
-					video_no[vidno] = 1
-					videos.append(vid)
-					del images[-1]
+			for img in db_word.images :
+				if image_no.get(img.no, -1) == -1 :
+					image_no[img.no] = 1;
+					if img.video == None :
+						images.append(img)
+					else :
+						video = img.video
+						if video_no.get(video.no, -1) == -1 :
+							video_no[video.no] = 1
+							videos.append(video)
 	return {'images' : images, 'videos' : videos}
 

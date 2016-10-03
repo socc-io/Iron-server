@@ -5,6 +5,7 @@ from secret import *
 
 import Service.CaptionService as cs
 import Service.ImageService as imageService
+import Service.WordService as wordService
 import Service.MiscService as misc
 import random, subprocess
 import SentenceSpliter as spliter
@@ -59,7 +60,17 @@ def signVideo(filename, outerpath, title) :
 	thumbnail = selectThumbnail(filename, vidno)
 	insertVideo(vidno, outerpath, thumbnail, title)
 	deleteVideofile(filename)
+	res = cs.generateManyCaption(IMAGE_FOLDER_BEFORE);
+	for imgname in res.keys() :
+		img_localpath = IMAGE_FOLDER_AFTER + imgname
+		subprocess.check_output('mv %s %s' % (IMAGE_FOLDER_BEFORE + imgname, img_localpath), shell=True)
+		caption = res[imgname]
+		print 'got caption : ' + caption
+		image = Image(imageService.generateNo(), vidno, imgname, caption, img_localpath)
+		wordService.insertByCaption(caption, image)
+		db_session.add(image)
 	for imgpath in misc.scanFolder(IMAGE_FOLDER_BEFORE) :
-		imgname = imgpath.split('/')[-1]
-		imageService.signImage(imgname, vidno)
+		if filename in imgpath :
+			imgname = imgpath.split('/')[-1]
+			imageService.signImage(imgname, vidno)
 

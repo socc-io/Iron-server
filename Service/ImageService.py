@@ -11,7 +11,7 @@ def deleteByNo(no) :
 	obj = findOneByNo(no)
 	if obj == None :
 		return 'already not exists'
-	deleteImageFile(str(obj.no) + '.jpg')3
+	deleteImageFile(str(obj.no) + '.jpg')
 	db_session.delete(obj)
 	db_session.commit()
 	return "deleted"
@@ -38,17 +38,20 @@ def insertImage(filename, imgno, owner, title, caption) :
 	image = Image(imgno, owner, title, caption, IMAGE_FOLDER_AFTER+str(imgno)+'.jpg')
 	db_session.add(image)
 	db_session.commit()	
-	return imgno
+	return image
 
 def signImage(filename, owner=None) :
 	imgno = generateNo()
-	caption = cs.generateCaption(IMAGE_FOLDER_BEFORE + filename)
+	caption = cs.generateCaption(IMAGE_FOLDER_BEFORE)
 	print 'got caption : ' + caption
 	command = 'mv %s%s %s%s' % (IMAGE_FOLDER_BEFORE, filename, \
 		IMAGE_FOLDER_AFTER, str(imgno)+'.jpg') # Move file to afterFolder
 	subprocess.check_output(command, shell=True)
-	insertImage(filename, imgno, owner, filename, caption)
+	image = insertImage(filename, imgno, owner, filename, caption)
 	for cap in ss.splitCaption(caption) :
-		wordno = wordService.insert(imgno, cap, commit=False)
+		word = wordService.findOneByContent(cap)
+		if word == None :
+			word = wordService.insert(cap, commit=False)
+		word.images.append(image)
 	db_session.commit()
 	return imgno
